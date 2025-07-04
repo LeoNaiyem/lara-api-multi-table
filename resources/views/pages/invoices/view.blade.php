@@ -28,7 +28,7 @@
         }
 
         .invoice-thead {
-            background: url("{{ asset('assets/invoice/thead.png') }}") no-repeat center center;
+            background: url("{{ asset('assets/invoice/footer-bg.png') }}") no-repeat center center;
             background-size: cover;
             color: white;
         }
@@ -36,9 +36,7 @@
         .invoice-thead th {
             background-color: unset;
             color: white;
-            /* Optional: dark overlay for text readability */
             padding: 12px;
-            /* Ensures padding doesn't collapse with image */
         }
 
         .card {
@@ -78,11 +76,17 @@
         }
 
         .total-box {
-            background-color: #112b6b;
+            background: url("http://127.0.0.1:8000/assets/invoice/total.png") no-repeat right center;
+            background-size: auto 100%;
             color: white;
             padding: 10px 20px;
-            border-radius: 10px;
             text-align: right;
+            margin-right: -12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 100px;
+            padding-right: 40px;
         }
 
         .signature {
@@ -108,15 +112,21 @@
         }
 
         .text-blue {
+            color: #013064 !important;
+        }
+
+        .subtotal-box {
+            padding-right: 35px;
+            gap: 105px;
+            font-weight: 700;
             color: #013064;
-            font-weight: 400;
         }
     </style>
     <div class="container invoice-container">
-        <div class="card shadow-sm my-3" style=" overflow: hidden; max-width: 70vw; margin: 0 auto;">
+        <div class="card shadow my-3" style=" overflow: hidden; max-width: 60vw; margin: 0 auto;">
 
             <!-- Header -->
-            <div class="invoice-header px-5 py-4 d-flex align-items-center">
+            <div class="invoice-header p-5 d-flex align-items-center">
                 <img src="{{ asset('assets/invoice/logo.png') }}" alt="logo">
                 <div class="ms-2">
                     <h2 class="mb-0 fw-bolder">HEALTH <span class="text-info fw-lighter">CARE</span></h2>
@@ -155,46 +165,46 @@
             </div>
 
             <!-- Table -->
-            <div class="table-responsive px-4">
+            <div class="table-responsive">
                 <table class="table table-bordered mb-0">
                     <thead class="invoice-thead">
                         <tr>
-                            <th>Description</th>
+                            <th class="text-left ps-5">Description</th>
                             <th class="text-center">Qty</th>
                             <th class="text-center">Price</th>
-                            <th class="text-end">Total</th>
+                            <th class="text-center ">Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Web Design</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center">$120</td>
-                            <td class="text-end">$240</td>
+                            <td class="text-left ps-5 text-blue">Web Design</td>
+                            <td class="text-center text-blue">2</td>
+                            <td class="text-center text-blue">$120</td>
+                            <td class="text-center text-blue">$240</td>
                         </tr>
                         <tr>
-                            <td>Logo Design</td>
-                            <td class="text-center">4</td>
-                            <td class="text-center">$100</td>
-                            <td class="text-end">$400</td>
+                            <td class="text-left ps-5">Logo Design</td>
+                            <td class="text-center text-blue">4</td>
+                            <td class="text-center text-blue">$100</td>
+                            <td class="text-center text-blue">$400</td>
                         </tr>
                         <tr>
-                            <td>Flyer Design</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center">$120</td>
-                            <td class="text-end">$240</td>
+                            <td class="text-left ps-5">Flyer Design</td>
+                            <td class="text-center text-blue">2</td>
+                            <td class="text-center text-blue">$120</td>
+                            <td class="text-center">$240</td>
                         </tr>
                         <tr>
-                            <td>Facebook Banner</td>
-                            <td class="text-center">3</td>
-                            <td class="text-center">$130</td>
-                            <td class="text-end">$390</td>
+                            <td class="text-left ps-5">Facebook Banner</td>
+                            <td class="text-center text-blue">3</td>
+                            <td class="text-center text-blue">$130</td>
+                            <td class="text-center">$390</td>
                         </tr>
                         <tr>
-                            <td>Business Card</td>
-                            <td class="text-center">2</td>
-                            <td class="text-center">$120</td>
-                            <td class="text-end">$240</td>
+                            <td class="text-left ps-5">Business Card</td>
+                            <td class="text-center text-blue">2</td>
+                            <td class="text-center text-blue">$120</td>
+                            <td class="text-center">$240</td>
                         </tr>
                     </tbody>
                 </table>
@@ -202,34 +212,49 @@
 
 
             <!-- Total -->
-            <div class="row p-4">
-                <div class="col-md-6">
-                    <p class="mb-1"><strong>Payment Method:</strong></p>
+            <div class="row p-4 align-items-center">
+                <div class="col-md-6 ps-5">
+                    <p class="mb-1 text-blue">
+                        <strong>Payment Method: </strong><span></span>
+                    </p>
                     <p>
                         Bank Name: Francisco Andrade<br>
                         Account Number: 0123 4567 8901
                     </p>
                 </div>
-                <div class="col-md-6 text-end">
-                    <p>Sub-total: $1,510</p>
-                    <p>Tax: —</p>
+                <div class="col-md-6 text-end p-0">
+                    <div class="subtotal-box d-flex justify-content-end align-items-center">
+                        <div>
+                            <p>Sub-total: </p>
+                            <p>Tax:</p>
+                        </div>
+                        <div>
+                            <p> $1,510</p>
+                            <p> $10</p>
+                        </div>
+                    </div>
                     <div class="total-box">
-                        <h5>Total: $1,580</h5>
+                        <h5 class="m-0">Total: </h5>
+                        <h5 class="m-0">$1,580</h5>
                     </div>
                 </div>
             </div>
 
             <!-- Signature & Terms -->
-            <div class="row p-4 pt-0">
+            <div class="row p-5 pt-0">
                 <div class="col-md-6">
-                    <p class="footer-note"><strong>Term and Conditions</strong><br>
+                    <p class="footer-note text-blue">
+                        <strong class="fw-bold fs-5">Term and Conditions</strong><br>
                         Please send payment within 30 days of receiving this invoice. There will be 10% interest charge per
-                        month on late invoice.</p>
+                        month on late invoice.
+                    </p>
                 </div>
-                <div class="col-md-6 text-end">
-                    <div class="signature mb-2"></div>
-                    <strong>BARTHOLOMEW</strong><br>
-                    <small>Administrator</small>
+                <div class="col-md-6 d-flex align-items-end text-blue flex-column">
+                    <div class="text-center">
+                        <div class="signature mb-2"></div>
+                        <h5 class="text-center fw-bolder m-0 text-blue">NAIYEM HOSSAIN</h5>
+                        <small class="text-center">Administrator</small>
+                    </div>
                 </div>
             </div>
         </div>

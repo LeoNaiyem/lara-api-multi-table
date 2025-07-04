@@ -17,10 +17,21 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            width: 100%;
+        }
+
         .sidebar {
             height: 100vh;
             background-color: #343a40;
             color: #fff;
+            position: fixed;
+            left: 0;
+            top: 57px;
         }
 
         .sidebar a {
@@ -46,6 +57,12 @@
 
         .navbar-brand {
             font-weight: bold;
+        }
+
+        .page-content {
+            margin-left: 195px;
+            margin-top: 57px;
+            border: 1px solid transparent;
         }
     </style>
 </head>
@@ -77,7 +94,10 @@
             </nav>
 
             <!-- Page Content -->
-            @yield('content')
+            <div class="page-content">
+                @yield('content')
+
+            </div>
         </div>
     </div>
 
