@@ -1,129 +1,8 @@
 @extends('layouts.main')
 @section('content')
-    <style>
-        .invoice-container {
-            font-family: 'Segoe UI', sans-serif;
 
-        }
-
-        .line-bar {
-            height: 5px;
-            width: 30px;
-            background-color: #013064;
-        }
-
-        .invoice-container * {
-            box-sizing: border-box;
-
-        }
-
-        .invoice-header {
-            background: url({{ asset('assets/invoice/heder-bg.png') }});
-            background-repeat: no-repeat;
-            background-size: cover;
-            object-fit: cover;
-            color: white;
-            position: relative;
-
-        }
-
-        .invoice-thead {
-            background: url("{{ asset('assets/invoice/footer-bg.png') }}") no-repeat center center;
-            background-size: cover;
-            color: white;
-        }
-
-        .invoice-thead th {
-            background-color: unset;
-            color: white;
-            padding: 12px;
-        }
-
-        .card {
-            --bs-card-border-width: 0;
-        }
-
-        .invoice-header img {
-            height: 120px;
-            object-fit: cover
-        }
-
-        .invoice-header .slogan {
-            letter-spacing: 3px;
-            font-size: 12px;
-        }
-
-        .invoice-title {
-            text-align: right;
-        }
-
-        .invoice-title h4 {
-            margin: 0;
-            font-weight: 500;
-        }
-
-        .table thead {
-            background-color: #112b6b;
-            color: white;
-        }
-
-        .table thead th {
-            border: none;
-        }
-
-        .table tbody td {
-            vertical-align: middle;
-        }
-
-        .total-box {
-            background: url("http://127.0.0.1:8000/assets/invoice/total.png") no-repeat right center;
-            background-size: auto 100%;
-            color: white;
-            padding: 10px 20px;
-            text-align: right;
-            margin-right: -12px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 100px;
-            padding-right: 40px;
-        }
-
-        .signature {
-            height: 40px;
-            border-bottom: 1px solid #000;
-            width: 200px;
-            margin-bottom: 5px;
-        }
-
-        .footer-note {
-            font-size: 0.9rem;
-        }
-
-        .highlight {
-            color: #771154;
-            font-weight: bold;
-        }
-
-        .amount-due {
-            color: #771154;
-            font-weight: 700;
-            font-size: 2rem;
-        }
-
-        .text-blue {
-            color: #013064 !important;
-        }
-
-        .subtotal-box {
-            padding-right: 35px;
-            gap: 105px;
-            font-weight: 700;
-            color: #013064;
-        }
-    </style>
     <div class="container invoice-container">
-        <div class="card shadow my-3" style=" overflow: hidden; max-width: 60vw; margin: 0 auto;">
+        <div class="card shadow my-3 mx-auto" style="overflow: hidden; width: 100%; max-width: 950px;">
 
             <!-- Header -->
             <div class="invoice-header p-5 d-flex align-items-center">
@@ -261,3 +140,6 @@
 
     </div>
 @endsection
+@push('invoice-css')
+    <link rel="stylesheet" href="{{ asset('assets/css/invoice.css') }}">
+@endpush
