@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\InvoiceDetail;
+use App\Models\InvoiceDetials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -45,7 +47,25 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $invoices = new Invoice();
+        $invoices->patient_id = $request->patient_id;
+        $invoices->invoice_total = $request->invoice_total;
+        $invoices->paid_total = $request->paid_total;
+        $invoices->discount = 0;
+        $invoices->vat = 0;
+        $invoices->payment_term = $request->payment_term;
+        $invoices->save();
+        foreach ($request->services as $service) {
+            $details = new InvoiceDetail();
+            $details->invoice_id = $invoices->id;
+            $details->service_id = $service['id'];
+            $details->unit = $service['unit'];
+            $details->price = $service['price'];
+            $details->discount = $service['discount'];
+            $details->vat = $service['vat'];
+            $details->save();
+        }
+        return response()->json($invoices);
     }
 
     /**

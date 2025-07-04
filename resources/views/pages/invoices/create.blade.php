@@ -188,19 +188,19 @@
                 total += subtotal - service.vat;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                                                                                                                        <td class="text-left ps-5 text-blue">${service.name}</td>
-                                                                                                                        <td class="text-center text-blue">$${service.price}</td>
-                                                                                                                        <td class="text-center text-blue">$${service.unit}</td>
-                                                                                                                        <td class="text-center text-blue">$${service.discount}</td>
-                                                                                                                        <td class="text-center">
-                                                                                                                            <button onClick="removeService(${index})" class="btn btn-sm btn-danger">
-                                                                                                                                <i class="fa fa-trash"></i>
-                                                                                                                            </button>
-                                                                                                                        </td>
-                                                                                                                        <td class="text-center text-blue">
-                                                                                                                            $${lineTotal}
-                                                                                                                        </td>
-                                                                                                                            `;
+                <td class="text-left ps-5 text-blue">${service.name}</td>
+                <td class="text-center text-blue">$${service.price}</td>
+                <td class="text-center text-blue">$${service.unit}</td>
+                <td class="text-center text-blue">$${service.discount}</td>
+                <td class="text-center">
+                <button onClick="removeService(${index})" class="btn btn-sm btn-danger">
+                <i class="fa fa-trash"></i>
+                </button>
+                </td>
+                <td class="text-center text-blue">
+                $${lineTotal}
+                </td>
+                `;
                 tBody.appendChild(tr);
             });
             subtotalDiv.textContent = subtotal;
@@ -215,11 +215,45 @@
         }
 
         //create invoice
-        function createInvoice() {
-            const data = {
+        async function createInvoice() {
+            const total = document.getElementById('total').textContent;
 
+            const data = {
+                patient_id: patient_id,
+                invoice_total: total,
+                paid_total: total,
+                payment_term: 'Cash',
+                services: selectedServices
             };
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/invoices', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('Invoice created:', result);
+                alert('Invoice created successfully!');
+                // Optionally, redirect or reset form
+            } catch (error) {
+                console.error('Failed to create invoice:', error);
+                alert('Error creating invoice.');
+            }
         }
+
+
+
+
+
     </script>
 @endsection
 @push('invoice-css')
