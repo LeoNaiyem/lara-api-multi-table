@@ -54,6 +54,7 @@ class InvoiceController extends Controller
         $invoices->discount = 0;
         $invoices->vat = 0;
         $invoices->payment_term = $request->payment_term;
+        $invoices->remark = $request->remark;
         $invoices->save();
         foreach ($request->services as $service) {
             $details = new InvoiceDetail();

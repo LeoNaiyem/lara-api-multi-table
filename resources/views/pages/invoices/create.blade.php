@@ -139,8 +139,7 @@
             <!-- Signature & Terms -->
             <div class="row p-5 pt-0 align-items-center">
                 <div class="col-6">
-                    <textarea placeholder="Any special note..." id="remarks" rows="3" cols="50"
-                        class="py-2 px-3"></textarea>
+                    <textarea placeholder="Any special note..." id="remark" rows="3" cols="50" class="py-2 px-3"></textarea>
                 </div>
                 <div class="col-6 d-flex align-items-end text-blue flex-column">
                     <button onclick="createInvoice()" id="submit" class="btn btn-success">Create Invoice</button>
@@ -154,8 +153,8 @@
         let subtotalDiv = document.getElementById('subtotal');
         let totalDiv = document.getElementById('total');
         const addBtn = document.getElementById('add');
-        const remarks = document.getElementById('remarks').textContent;
         const selectedServices = [];
+
 
         // add service
         addBtn.addEventListener('click', () => {
@@ -172,6 +171,7 @@
                 unit: parseFloat(unit),
                 discount: parseFloat(discount),
                 vat: 0,
+
             }
             selectedServices.push(service);
             showServices();
@@ -188,24 +188,23 @@
                 total += subtotal - service.vat;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                <td class="text-left ps-5 text-blue">${service.name}</td>
-                <td class="text-center text-blue">$${service.price}</td>
-                <td class="text-center text-blue">$${service.unit}</td>
-                <td class="text-center text-blue">$${service.discount}</td>
-                <td class="text-center">
-                <button onClick="removeService(${index})" class="btn btn-sm btn-danger">
-                <i class="fa fa-trash"></i>
-                </button>
-                </td>
-                <td class="text-center text-blue">
-                $${lineTotal}
-                </td>
-                `;
+                                            <td class="text-left ps-5 text-blue">${service.name}</td>
+                                            <td class="text-center text-blue">$${service.price}</td>
+                                            <td class="text-center text-blue">$${service.unit}</td>
+                                            <td class="text-center text-blue">$${service.discount}</td>
+                                            <td class="text-center">
+                                            <button onClick="removeService(${index})" class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                            </button>
+                                            </td>
+                                            <td class="text-center text-blue">
+                                            $${lineTotal}
+                                            </td>
+                                            `;
                 tBody.appendChild(tr);
             });
             subtotalDiv.textContent = subtotal;
             totalDiv.textContent = subtotal + 10;
-            console.log(subtotal, total);
         }
 
         //remove service
@@ -217,14 +216,16 @@
         //create invoice
         async function createInvoice() {
             const total = document.getElementById('total').textContent;
-
+            const remark = document.getElementById('remark').value;
             const data = {
                 patient_id: patient_id,
                 invoice_total: total,
                 paid_total: total,
                 payment_term: 'Cash',
+                remark: remark,
                 services: selectedServices
             };
+            console.log(data);
 
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/invoices', {
