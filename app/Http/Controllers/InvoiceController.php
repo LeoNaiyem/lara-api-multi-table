@@ -68,8 +68,9 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Invoice $invoice)
     {
-        //
+        $invoice->delete();
+        return redirect(route('invoices.index'))->with('message', 'Successfully Deleted!');
     }
 }

@@ -65,9 +65,10 @@
                         <tr>
                             <th>Id</th>
                             <th>Patient id</th>
-                            <th>Doctor id</th>
-                            <th>Invoice at</th>
-                            <th>Cc</th>
+                            <th>Invoice Total</th>
+                            <th>Paid Total</th>
+                            <th>Discount</th>
+                            <th>Remark</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -76,9 +77,10 @@
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ optional($item->patient)->name ?? $item->patient_id }}</td>
-                                <td>{{ optional($item->doctor)->name ?? $item->doctor_id }}</td>
-                                <td>{{ $item->Invoice_at }}</td>
-                                <td>{{ $item->cc }}</td>
+                                <td>{{ $item->invoice_total }}</td>
+                                <td>{{ $item->paid_total }}</td>
+                                <td>{{ $item->discount }}</td>
+                                <td>{{ $item->remark }}</td>
                                 <td>
                                     <a href="{{ route('invoices.show', $item->id) }}" class="btn btn-sm btn-info">View</a>
                                     <a href="{{ route('invoices.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
