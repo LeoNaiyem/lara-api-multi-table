@@ -75,7 +75,7 @@
             <h4 class="text-white mb-4">🏥 HMS</h4>
             <a href="#" class="active"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
             <a href="#"><i class="fas fa-user-injured me-2"></i> Patients</a>
-            <a href="#"><i class="fas fa-file-invoice-dollar me-2"></i> Invoices</a>
+            <a href="{{ route('invoices.index') }}"><i class="fas fa-file-invoice-dollar me-2"></i> Invoices</a>
             <a href="#"><i class="fas fa-calendar-check me-2"></i> Appointments</a>
             <a href="#"><i class="fas fa-user-md me-2"></i> Doctors</a>
             <a href="#"><i class="fas fa-capsules me-2"></i> Inventory</a>
