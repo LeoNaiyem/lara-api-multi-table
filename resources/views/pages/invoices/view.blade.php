@@ -1,8 +1,7 @@
 @extends('layouts.main')
 @section('content')
-
     <div class="container invoice-container">
-        <div class="card shadow my-3 mx-auto" style="overflow: hidden; width: 100%; max-width: 950px;">
+        <div id="invoice-area" class=" card shadow my-3 mx-auto" style="overflow: hidden; width: 100%; max-width: 950px;">
 
             <!-- Header -->
             <div class="invoice-header p-5 d-flex align-items-center">
@@ -19,7 +18,7 @@
 
             <!-- Info -->
             <div class="row py-4 px-5">
-                <div class="col-md-6 ">
+                <div class="col-6 ">
                     <p class="mb-1 text-blue">Invoice To:</p>
                     <h2 class="highlight">Francois Mercer</h2>
                     <div class="d-flex align-items-center gap-2">
@@ -33,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 text-end ">
+                <div class="col-6 text-end ">
                     <p class="mb-1 text-blue">Total Due:</p>
                     <h2 class="highlight"> $1,580</h2>
                     <div class="d-flex justify-content-end my-3">
@@ -92,7 +91,7 @@
 
             <!-- Total -->
             <div class="row p-4 align-items-center">
-                <div class="col-md-6 ps-5">
+                <div class="col-6 ps-5">
                     <p class="mb-1 text-blue">
                         <strong>Payment Method: </strong><span></span>
                     </p>
@@ -101,7 +100,7 @@
                         Account Number: 0123 4567 8901
                     </p>
                 </div>
-                <div class="col-md-6 text-end p-0">
+                <div class="col-6 text-end p-0">
                     <div class="subtotal-box d-flex justify-content-end align-items-center">
                         <div>
                             <p>Sub-total: </p>
@@ -121,14 +120,14 @@
 
             <!-- Signature & Terms -->
             <div class="row p-5 pt-0">
-                <div class="col-md-6">
+                <div class="col-6">
                     <p class="footer-note text-blue">
                         <strong class="fw-bold fs-5">Term and Conditions</strong><br>
                         Please send payment within 30 days of receiving this invoice. There will be 10% interest charge per
                         month on late invoice.
                     </p>
                 </div>
-                <div class="col-md-6 d-flex align-items-end text-blue flex-column">
+                <div class="col-6 d-flex align-items-end text-blue flex-column">
                     <div class="text-center">
                         <div class="signature mb-2"></div>
                         <h5 class="text-center fw-bolder m-0 text-blue">NAIYEM HOSSAIN</h5>
@@ -138,7 +137,11 @@
             </div>
         </div>
 
+        <div class="text-center my-4 no-print">
+            <button class="btn btn-primary" onclick="window.print()">Print Invoice</button>
+        </div>
     </div>
+
 @endsection
 @push('invoice-css')
     <link rel="stylesheet" href="{{ asset('assets/css/invoice.css') }}">
