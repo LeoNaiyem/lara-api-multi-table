@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
-use App\Models\InvoiceDetials;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -72,10 +72,55 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Invoice $invoice)
-    {
-        //
+public function show($invoiceId)
+{
+    $invoice = DB::table('invoices as i')
+        ->join('invoice_details as d', 'i.id', '=', 'd.invoice_id')
+        ->join('services as s','s.id','=','d.service_id')
+        ->where('invoices.id', $invoiceId)
+        ->get([
+            'i.patient_id',
+            'i.invoice_total',
+            'i.paid_total',
+            'i.payment_term',         
+            's.name as service_name',
+            'd.price',
+            'd.unit',
+            'd.discount',
+            'd.vat'
+        ]);
+
+     $patient=Patient::find($invoice->patient_id);
+
+
+     $details=InvoiceDetail::where("invoice_id",'=',$invoice->id)->get();
+
+
+    if ($invoice->isEmpty()) {
+        return response()->json(['message' => 'Invoice not found'], 404);
     }
+
+
+    // $invoiceData = [
+    //     'patient_id' => $invoice[0]->patient_id,
+    //     'invoice_total' => $invoice[0]->invoice_total,
+    //     'paid_total' => $invoice[0]->paid_total,
+    //     'payment_term' => $invoice[0]->payment_term,
+    //     'services' => $invoice->map(function($service) {
+    //         return [
+    //             'id' => $service->service_id,
+    //             'name' => $service->service_name,
+    //             'price' => $service->price,
+    //             'unit' => $service->unit,
+    //             'discount' => $service->discount,
+    //             'vat' => $service->vat,
+    //         ];
+    //     }),
+    // ];
+
+    return response()->json(["invoice"=>$invoice,"details"=>$details,"patient"=>$patient]);
+}
+
 
     /**
      * Update the specified resource in storage.

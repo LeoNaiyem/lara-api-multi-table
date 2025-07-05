@@ -12,7 +12,7 @@
                 </div>
                 <div class="invoice-title ms-auto">
                     <h1 class="mb-0">INVOICE</h1>
-                    <small>Invoice No : <strong class="fs-6">{{$newInvoiceNo}}</strong></small>
+                    <small>Invoice No : <strong class="fs-6">{{ $newInvoiceNo }}</strong></small>
                 </div>
             </div>
 
@@ -22,7 +22,7 @@
                     <p class="mb-1 text-blue">Invoice To:</p>
                     <select id="patient-id" class="form-select mb-2">
                         @foreach ($patients as $patient)
-                            <option value="{{ $patient->id }}">{{$patient->name}}</option>
+                            <option value="{{ $patient->id }}">{{ $patient->name }}</option>
                         @endforeach
                     </select>
                     {{-- <h2 class="highlight">Francois Mercer</h2> --}}
@@ -53,7 +53,7 @@
                     <label for="service-id">Service</label>
                     <select name="service-id" id="service-id" class="form-select">
                         @foreach ($services as $service)
-                            <option value="{{ $service->id }}">{{$service->name}}</option>
+                            <option value="{{ $service->id }}">{{ $service->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -188,19 +188,19 @@
                 total += subtotal - service.vat;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                                            <td class="text-left ps-5 text-blue">${service.name}</td>
-                                            <td class="text-center text-blue">$${service.price}</td>
-                                            <td class="text-center text-blue">$${service.unit}</td>
-                                            <td class="text-center text-blue">$${service.discount}</td>
-                                            <td class="text-center">
-                                            <button onClick="removeService(${index})" class="btn btn-sm btn-danger">
-                                            <i class="fa fa-trash"></i>
-                                            </button>
-                                            </td>
-                                            <td class="text-center text-blue">
-                                            $${lineTotal}
-                                            </td>
-                                            `;
+                    <td class="text-left ps-5 text-blue">${service.name}</td>
+                    <td class="text-center text-blue">$${service.price}</td>
+                    <td class="text-center text-blue">$${service.unit}</td>
+                    <td class="text-center text-blue">$${service.discount}</td>
+                    <td class="text-center">
+                    <button onClick="removeService(${index})" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash"></i>
+                    </button>
+                    </td>
+                    <td class="text-center text-blue">
+                    $${lineTotal}
+                    </td>
+                `;
                 tBody.appendChild(tr);
             });
             subtotalDiv.textContent = subtotal;
@@ -250,11 +250,6 @@
                 alert('Error creating invoice.');
             }
         }
-
-
-
-
-
     </script>
 @endsection
 @push('invoice-css')
