@@ -44,9 +44,11 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Invoice $invoice)
     {
-        return view('pages.invoices.view');
+        $pId = $invoice->patient_id;
+        $patient = Patient::find($pId);
+        return view('pages.invoices.view', compact('patient', 'invoice'));
     }
 
     /**

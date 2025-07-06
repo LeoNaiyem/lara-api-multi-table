@@ -12,7 +12,7 @@
                 </div>
                 <div class="invoice-title ms-auto">
                     <h1 class="mb-0">INVOICE</h1>
-                    <small>Invoice No : <strong class="fs-6">{{ $newInvoiceNo }}</strong></small>
+                    <small class="fw-light">Invoice No : <strong>{{ $newInvoiceNo }}</strong></small>
                 </div>
             </div>
 
@@ -148,7 +148,6 @@
         </div>
     </div>
     <script>
-        const patient_id = document.getElementById('patient-id').value;
         const serviceSelect = document.getElementById('service-id');
         let subtotalDiv = document.getElementById('subtotal');
         let totalDiv = document.getElementById('total');
@@ -188,19 +187,19 @@
                 total += subtotal - service.vat;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="text-left ps-5 text-blue">${service.name}</td>
-                    <td class="text-center text-blue">$${service.price}</td>
-                    <td class="text-center text-blue">$${service.unit}</td>
-                    <td class="text-center text-blue">$${service.discount}</td>
-                    <td class="text-center">
-                    <button onClick="removeService(${index})" class="btn btn-sm btn-danger">
-                    <i class="fa fa-trash"></i>
-                    </button>
-                    </td>
-                    <td class="text-center text-blue">
-                    $${lineTotal}
-                    </td>
-                `;
+                                            <td class="text-left ps-5 text-blue">${service.name}</td>
+                                            <td class="text-center text-blue">$${service.price}</td>
+                                            <td class="text-center text-blue">$${service.unit}</td>
+                                            <td class="text-center text-blue">$${service.discount}</td>
+                                            <td class="text-center">
+                                            <button onClick="removeService(${index})" class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                            </button>
+                                            </td>
+                                            <td class="text-center text-blue">
+                                            $${lineTotal}
+                                            </td>
+                                        `;
                 tBody.appendChild(tr);
             });
             subtotalDiv.textContent = subtotal;
@@ -217,6 +216,7 @@
         async function createInvoice() {
             const total = document.getElementById('total').textContent;
             const remark = document.getElementById('remark').value;
+            const patient_id = document.getElementById('patient-id').value;
             const data = {
                 patient_id: patient_id,
                 invoice_total: total,

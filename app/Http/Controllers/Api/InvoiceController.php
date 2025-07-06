@@ -55,6 +55,7 @@ class InvoiceController extends Controller
         $invoices->vat = 0;
         $invoices->payment_term = $request->payment_term;
         $invoices->remark = $request->remark;
+        $invoices->created_at = now()->format('F d, Y');
         $invoices->save();
         foreach ($request->services as $service) {
             $details = new InvoiceDetail();
@@ -72,54 +73,83 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-public function show($invoiceId)
-{
-    $invoice = DB::table('invoices as i')
-        ->join('invoice_details as d', 'i.id', '=', 'd.invoice_id')
-        ->join('services as s','s.id','=','d.service_id')
-        ->where('invoices.id', $invoiceId)
-        ->get([
-            'i.patient_id',
-            'i.invoice_total',
-            'i.paid_total',
-            'i.payment_term',         
-            's.name as service_name',
-            'd.price',
-            'd.unit',
-            'd.discount',
-            'd.vat'
+    public function show($invoiceId)
+    {
+        $invoice = DB::table('invoices as i')
+            ->join('invoice_details as d', 'i.id', '=', 'd.invoice_id')
+            ->join('services as s', 's.id', '=', 'd.service_id')
+            ->where('i.id', $invoiceId)
+            ->get([
+                'i.patient_id',
+                'i.invoice_total',
+                'i.paid_total',
+                'i.payment_term',
+                's.name',
+                'd.price',
+                'd.unit',
+                'd.discount',
+                'd.vat'
+            ]);
+
+        if ($invoice->isEmpty()) {
+            return response()->json(['message' => 'Invoice not found'], 404);
+        }
+
+        $patient = Patient::find($invoice[0]->patient_id);
+        // $details = InvoiceDetail::where('invoice_id', $invoiceId)->get();
+
+        return response()->json([
+            'invoice' => $invoice,
+            // 'details' => $details,
+            'patient' => $patient
         ]);
-
-     $patient=Patient::find($invoice->patient_id);
-
-
-     $details=InvoiceDetail::where("invoice_id",'=',$invoice->id)->get();
-
-
-    if ($invoice->isEmpty()) {
-        return response()->json(['message' => 'Invoice not found'], 404);
     }
 
 
-    // $invoiceData = [
-    //     'patient_id' => $invoice[0]->patient_id,
-    //     'invoice_total' => $invoice[0]->invoice_total,
-    //     'paid_total' => $invoice[0]->paid_total,
-    //     'payment_term' => $invoice[0]->payment_term,
-    //     'services' => $invoice->map(function($service) {
-    //         return [
-    //             'id' => $service->service_id,
-    //             'name' => $service->service_name,
-    //             'price' => $service->price,
-    //             'unit' => $service->unit,
-    //             'discount' => $service->discount,
-    //             'vat' => $service->vat,
-    //         ];
-    //     }),
-    // ];
 
-    return response()->json(["invoice"=>$invoice,"details"=>$details,"patient"=>$patient]);
-}
+
+    // public function show($invoiceId)
+    // {
+    //     $invoice = DB::table('invoices')
+    //         ->join('invoice_details', 'invoices.id', '=', 'invoice_details.invoice_id')
+    //         ->where('invoices.id', $invoiceId)
+    //         ->get([
+    //             'invoices.patient_id',
+    //             'invoices.invoice_total',
+    //             'invoices.paid_total',
+    //             'invoices.payment_term',
+    //             'invoice_details.id as service_id',
+    //             'invoice_details.name as service_name',
+    //             'invoice_details.price',
+    //             'invoice_details.unit',
+    //             'invoice_details.discount',
+    //             'invoice_details.vat'
+    //         ]);
+
+    //     if ($invoice->isEmpty()) {
+    //         return response()->json(['message' => 'Invoice not found'], 404);
+    //     }
+
+    //     // Group data by invoice and format it
+    //     $invoiceData = [
+    //         'patient_id' => $invoice[0]->patient_id,
+    //         'invoice_total' => $invoice[0]->invoice_total,
+    //         'paid_total' => $invoice[0]->paid_total,
+    //         'payment_term' => $invoice[0]->payment_term,
+    //         'services' => $invoice->map(function ($service) {
+    //             return [
+    //                 'id' => $service->service_id,
+    //                 'name' => $service->service_name,
+    //                 'price' => $service->price,
+    //                 'unit' => $service->unit,
+    //                 'discount' => $service->discount,
+    //                 'vat' => $service->vat,
+    //             ];
+    //         }),
+    //     ];
+
+    //     return response()->json($invoiceData);
+    // }
 
 
     /**
