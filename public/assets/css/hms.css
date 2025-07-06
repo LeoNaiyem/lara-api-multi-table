@@ -1,0 +1,181 @@
+/* customize bootstrap class */
+.btn-info,
+.bg-info {
+    background-color: #249ba8 !important;
+    border-color: #249ba8 !important;
+}
+.btn-info:hover {
+    background-color: #27a6b4 !important;
+    color: #ffffff !important;
+}
+
+.table-primary {
+    --bs-table-bg: #249ba83d;
+}
+.table {
+    --bs-table-hover-bg: #249ba81d;
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: #249ba8 !important;
+}
+.page-item.active .page-link {
+    background-color: #249ba8 !important;
+    border-color: #249ba8 !important;
+}
+.page-link {
+    color: #249ba8 !important;
+}
+/* customize bootstrap class ends */
+
+/* customize theme css */
+.sidebar .nav.nav-secondary > .nav-item.active a i,
+.sidebar[data-background-color="white"]
+    .nav.nav-secondary
+    > .nav-item.active
+    a
+    i {
+    color: #249ba8 !important;
+}
+.sidebar .nav.nav-secondary > .nav-item.active a:before,
+.sidebar[data-background-color="white"]
+    .nav.nav-secondary
+    > .nav-item.active
+    a:before {
+    background: #249ba8 !important;
+}
+
+.sidebar .nav.nav-secondary > .nav-item a:hover i,
+.sidebar .nav.nav-secondary > .nav-item a:focus i,
+.sidebar[data-background-color="white"]
+    .nav.nav-secondary
+    > .nav-item
+    a:hover
+    i,
+.sidebar[data-background-color="white"]
+    .nav.nav-secondary
+    > .nav-item
+    a:focus
+    i {
+    color: #249ba8 !important;
+}
+/* customize theme css ends */
+
+/* start index page filter search */
+.input-group-prepend .input-group-text {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px 0 0 5px;
+}
+
+.input-group-prepend .input-group-text i {
+    font-size: 1.2rem;
+}
+/* end index page filter search */
+
+/* prescription start */
+.ps-wrapper {
+    max-width: 80vw;
+    min-height: 100vh;
+    margin: 0 auto;
+}
+.ps-wrapper * {
+    /* margin: 0; */
+    /* padding: 0; */
+    line-height: 25px;
+    box-sizing: border-box;
+}
+.ps-top img,
+.ps-bottom img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.ps-logo img {
+    height: 140px;
+    width: auto;
+    object-fit: cover;
+}
+.ps-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+}
+.ps-watermark img {
+    width: 100%;
+    height: 100%;
+    opacity: 0.05;
+}
+.ps-body {
+    min-height: 50vh;
+    z-index: 2;
+}
+.ps-body > .ps-head {
+    width: 85%;
+    margin: 0 auto;
+    margin-top: -50px;
+    padding-left: 75px;
+}
+.ps-body > .ps-head > .col-9 > h1 {
+    color: #26a8b4;
+}
+.ps-logo {
+    margin-top: -20px;
+}
+
+.ps-main {
+    min-height: 50vh;
+}
+
+.ps-timestamp {
+    position: absolute;
+    bottom: 45%;
+    left: 8%;
+}
+.ps-address {
+    position: absolute;
+    left: 40%;
+    bottom: 30%;
+}
+.ps-address p,
+.ps-timestamp p {
+    font-size: small;
+    font-weight: 500;
+}
+.print-button {
+    text-align: center;
+    margin-top: 30px;
+}
+.btn-print {
+    background-color: #1a5276;
+    color: white;
+    padding: 8px 25px;
+    border: none;
+    border-radius: 3px;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .prescription-card,
+    .prescription-card * {
+        visibility: visible;
+    }
+    .prescription-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 40px;
+        box-shadow: none;
+        page-break-after: always;
+    }
+}
+/* prescription end */

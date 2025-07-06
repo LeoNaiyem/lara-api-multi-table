@@ -11,6 +11,7 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/css/hms.css') }}" />
     @stack('invoice-css')
 
     <style>
@@ -78,7 +79,7 @@
             <a href="{{ route('invoices.index') }}"><i class="fas fa-file-invoice-dollar me-2"></i> Invoices</a>
             <a href="#"><i class="fas fa-calendar-check me-2"></i> Appointments</a>
             <a href="#"><i class="fas fa-user-md me-2"></i> Doctors</a>
-            <a href="#"><i class="fas fa-capsules me-2"></i> Inventory</a>
+            <a href="{{ route('prescriptions.index') }}"><i class="fas fa-capsules me-2"></i> Prescriptions</a>
             <a href="#"><i class="fas fa-chart-line me-2"></i> Reports</a>
             <a href="#"><i class="fas fa-cog me-2"></i> Settings</a>
         </div>

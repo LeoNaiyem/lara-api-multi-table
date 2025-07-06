@@ -148,7 +148,6 @@
         </div>
     </div>
     <script>
-        const serviceSelect = document.getElementById('service-id');
         let subtotalDiv = document.getElementById('subtotal');
         let totalDiv = document.getElementById('total');
         const addBtn = document.getElementById('add');
@@ -157,6 +156,7 @@
 
         // add service
         addBtn.addEventListener('click', () => {
+            const serviceSelect = document.getElementById('service-id');
             const service_id = serviceSelect.value;
             const service_name = serviceSelect.options[serviceSelect.selectedIndex].text;
             const price = document.getElementById('price').value;
@@ -187,19 +187,19 @@
                 total += subtotal - service.vat;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                                            <td class="text-left ps-5 text-blue">${service.name}</td>
-                                            <td class="text-center text-blue">$${service.price}</td>
-                                            <td class="text-center text-blue">$${service.unit}</td>
-                                            <td class="text-center text-blue">$${service.discount}</td>
-                                            <td class="text-center">
-                                            <button onClick="removeService(${index})" class="btn btn-sm btn-danger">
-                                            <i class="fa fa-trash"></i>
-                                            </button>
-                                            </td>
-                                            <td class="text-center text-blue">
-                                            $${lineTotal}
-                                            </td>
-                                        `;
+                                                <td class="text-left ps-5 text-blue">${service.name}</td>
+                                                <td class="text-center text-blue">$${service.price}</td>
+                                                <td class="text-center text-blue">$${service.unit}</td>
+                                                <td class="text-center text-blue">$${service.discount}</td>
+                                                <td class="text-center">
+                                                <button onClick="removeService(${index})" class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                                </button>
+                                                </td>
+                                                <td class="text-center text-blue">
+                                                $${lineTotal}
+                                                </td>
+                                            `;
                 tBody.appendChild(tr);
             });
             subtotalDiv.textContent = subtotal;
