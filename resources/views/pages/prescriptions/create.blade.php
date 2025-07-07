@@ -23,7 +23,7 @@
                             <select name="doctor" id="doctor-id" class="my-1 form-select p-2">
                                 <option value="">---- Select Doctor ---</option>
                                 @foreach ($doctors as $doctor)
-                                    <option value="{{ $doctor->id }}">{{$doctor->name}}</option>
+                                    <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
                                 @endforeach
                             </select>
                             <p class="text-danger fw-bold">
@@ -46,14 +46,15 @@
                                 <select name="patient-id" id="patient-id" class="form-select p-2 mt-1">
                                     <option value="">---- Select Patient ----</option>
                                     @foreach ($patients as $patient)
-                                        <option value="{{ $patient->id }}">{{$patient->name}}</option>
+                                        <option value="{{ $patient->id }}">{{ $patient->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             {{-- <p class="my-3">AGE: &nbsp; &nbsp;_____________</p> --}}
                             <div class="my-3 d-flex align-items-center gap-4">
                                 <label for="age">AGE:</label>
-                                <input class="form-control p-1" type="number" name="age" id="age" placeholder="Age">
+                                <input class="form-control p-1" type="number" name="age" id="age"
+                                    placeholder="Age">
                             </div>
 
                             {{-- <p class="mb-3">SEX: &nbsp; &nbsp;_____________</p> --}}
@@ -61,7 +62,8 @@
                                 <p class="m-0">Sex:</p>
                                 <div class="d-flex">
                                     <div class="form-check d-flex align-items-center gap-1">
-                                        <input class="form-check-input" type="radio" name="sex" id="sex_male" value="0">
+                                        <input class="form-check-input" type="radio" name="sex" id="sex_male"
+                                            value="0">
                                         <label class="form-check-label" for="sex_male">Male</label>
                                     </div>
 
@@ -92,7 +94,7 @@
                         <div class=" d-flex justify-content-between">
                             <img class="pe-none" src="{{ asset('assets/img/prescription/rx_icon.png') }}" alt="rx icon"
                                 height="40">
-                            <p>DATE: <strong>{{now()->format('F d, Y')}}</strong></p>
+                            <p>DATE: <strong>{{ now()->format('F d, Y') }}</strong></p>
                         </div>
 
                         {{-- input --}}
@@ -165,7 +167,7 @@
                             <select name="diagnosis" id="diagnosis" class="form-select my-1">
                                 <option value="">----Select Tests----</option>
                                 @foreach ($services as $service)
-                                    <option value="{{ $service->name }}">{{$service->name}}</option>
+                                    <option value="{{ $service->name }}">{{ $service->name }}</option>
                                 @endforeach
                             </select>
                             <button id="add-diagnosis" class="btn btn-info">
@@ -181,8 +183,7 @@
                         <p class="fw-bold text-info text-uppercase">Clinical Notes</p>
                         <div class="mb-3">
                             <label for="cc" class="form-label">Chief Complaint (CC):</label>
-                            <textarea class="form-control" id="cc" name="cc" rows="2"
-                                placeholder="e.g., Fever, cough..."></textarea>
+                            <textarea class="form-control" id="cc" name="cc" rows="2" placeholder="e.g., Fever, cough..."></textarea>
                         </div>
 
                         <div class="mb-3">
@@ -220,7 +221,8 @@
                     <i class="fa fa-cart"></i>
                     Save
                 </button>
-                <img class="pe-none" src="{{ asset('assets/img/prescription/border_bottom.png') }}" alt="bottom graphics">
+                <img class="pe-none" src="{{ asset('assets/img/prescription/border_bottom.png') }}"
+                    alt="bottom graphics">
             </div>
         </div>
     </div>
@@ -289,12 +291,12 @@
         });
 
         // show selected diagnosis Items
-        function showDiagnosis(){
+        function showDiagnosis() {
             const diagnosisContainer = document.getElementById('diagnosis-container');
-            diagnosisContainer.innerHTML='';
-            diagnosisItems.forEach((item,index)=>{
-                const li=document.createElement('li');
-                li.innerHTML=`
+            diagnosisContainer.innerHTML = '';
+            diagnosisItems.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         ${item}
                         <span style="cursor:pointer;height:20px;width:20px" onclick="removeDiagnosisItem(${index})" class="d-flex justify-content-center align-items-center rounded-pill bg-danger bg-opacity-25">
@@ -307,9 +309,29 @@
         }
 
         // remove diagnosis item
-        function removeDiagnosisItem(i){
-            diagnosisItems.splice(i,1);
+        function removeDiagnosisItem(i) {
+            diagnosisItems.splice(i, 1);
             showDiagnosis();
         }
+
+        //crate prescription
+        document.getElementById('save-btn').addEventListener('click', () => {
+            const patient_id = document.getElementById('patient-id').value;
+            const consultant_id = document.getElementById('doctor-id').value;
+            const cc = document.getElementById('cc').value;
+            const rf = document.getElementById('rf').value;
+            const advice = document.getElementById('advice').value;
+            const investigation = diagnosisItemsStr;
+            const payLoad = {
+                patient_id,
+                consultant_id,
+                cc,
+                rf,
+                investigation,
+                advice,
+                rx: items,
+            }
+            console.log(payLoad);
+        });
     </script>
 @endsection
