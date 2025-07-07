@@ -108,13 +108,13 @@
                             <div class="" style="min-width: 150px; max-width: 200px;">
                                 <label for="dose_schedule">Dose</label>
                                 <select id='dose' name="dose_schedule" class="form-select">
-                                    <option value="1+0+0">Morning only</option>
-                                    <option value="0+1+0">Afternoon only</option>
-                                    <option value="0+0+1">Night only</option>
-                                    <option value="1+1+0">Morning + Afternoon</option>
-                                    <option value="1+0+1">Morning + Night</option>
-                                    <option value="0+1+1">Afternoon + Night</option>
-                                    <option value="1+1+1">Morning + Afternoon + Night</option>
+                                    <option value="Morning only">Morning only</option>
+                                    <option value="Afternoon only">Afternoon only</option>
+                                    <option value="Night only">Night only</option>
+                                    <option value="Morning + Afternoon">Morning + Afternoon</option>
+                                    <option value="Morning + Night">Morning + Night</option>
+                                    <option value="Afternoon + Night">Afternoon + Night</option>
+                                    <option value="Morning + Afternoon + Night">Morning + Afternoon + Night</option>
                                 </select>
 
                             </div>
@@ -347,6 +347,10 @@
                 const result = await response.json();
                 console.log('Prescription Created', result);
                 alert('Prescription created successfully');
+
+                //redirect to the index page
+                window.location.assign("{{ route('prescriptions.index') }}");
+
             } catch (error) {
                 console.log('Server error',error);
                 alert('Error Creating Prescription')

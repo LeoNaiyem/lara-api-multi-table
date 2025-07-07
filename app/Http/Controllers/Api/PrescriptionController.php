@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Patient;
 use App\Models\Prescription;
 use App\Models\PrescriptionDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PrescriptionController extends Controller
 {
@@ -50,7 +52,35 @@ class PrescriptionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $prescription = DB::table('prescriptions as p')
+            ->join('prescription_details as d', 'p.id', '=', 'd.prescription_id')
+            ->join('medicines as m', 'm.id', '=', 'd.medicine_id')
+            ->where('p.id', $id)
+            ->get([
+                'p.patient_id',
+                'p.consultant_id',
+                'p.cc',
+                'p.rf',
+                'p.investigation',
+                'p.advice',
+                'm.name as medicine_name',
+                'd.dose',
+                'd.days',
+                'd.suggestion',
+            ]);
+
+        if ($prescription->isEmpty()) {
+            return response()->json(['message' => 'prescription not found'], 404);
+        }
+
+        $patient = Patient::find($prescription[0]->patient_id);
+        // $details = InvoiceDetail::where('invoice_id', $invoiceId)->get();
+
+        return response()->json([
+            'prescription' => $prescription,
+            // 'details' => $details,
+            'patient' => $patient
+        ]);
     }
 
     /**

@@ -151,7 +151,7 @@
         let subtotalDiv = document.getElementById('subtotal');
         let totalDiv = document.getElementById('total');
         const addBtn = document.getElementById('add');
-        const selectedServices = [];
+        let selectedServices = [];
 
 
         // add service
@@ -225,7 +225,6 @@
                 remark: remark,
                 services: selectedServices
             };
-            console.log(data);
 
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/invoices', {
@@ -244,7 +243,10 @@
                 const result = await response.json();
                 console.log('Invoice created:', result);
                 alert('Invoice created successfully!');
-                // Optionally, redirect or reset form
+
+                //redirect to the index page
+                window.location.assign("{{ route('invoices.index') }}");
+
             } catch (error) {
                 console.error('Failed to create invoice:', error);
                 alert('Error creating invoice.');

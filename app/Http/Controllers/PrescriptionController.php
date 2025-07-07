@@ -51,7 +51,9 @@ class PrescriptionController extends Controller
 
     public function show(Prescription $prescription)
     {
-        return view('pages.prescriptions.view', compact('prescription'));
+        $doctor=Doctor::find($prescription->consultant_id);
+        $patient=Patient::find($prescription->patient_id);
+        return view('pages.prescriptions.view', compact('prescription','doctor','patient'));
     }
 
     public function edit(Prescription $prescription)
