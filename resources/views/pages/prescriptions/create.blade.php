@@ -53,8 +53,7 @@
                             {{-- <p class="my-3">AGE: &nbsp; &nbsp;_____________</p> --}}
                             <div class="my-3 d-flex align-items-center gap-4">
                                 <label for="age">AGE:</label>
-                                <input class="form-control p-1" type="number" name="age" id="age"
-                                    placeholder="Age">
+                                <input class="form-control p-1" type="number" name="age" id="age" placeholder="Age">
                             </div>
 
                             {{-- <p class="mb-3">SEX: &nbsp; &nbsp;_____________</p> --}}
@@ -62,8 +61,7 @@
                                 <p class="m-0">Sex:</p>
                                 <div class="d-flex">
                                     <div class="form-check d-flex align-items-center gap-1">
-                                        <input class="form-check-input" type="radio" name="sex" id="sex_male"
-                                            value="0">
+                                        <input class="form-check-input" type="radio" name="sex" id="sex_male" value="0">
                                         <label class="form-check-label" for="sex_male">Male</label>
                                     </div>
 
@@ -183,7 +181,8 @@
                         <p class="fw-bold text-info text-uppercase">Clinical Notes</p>
                         <div class="mb-3">
                             <label for="cc" class="form-label">Chief Complaint (CC):</label>
-                            <textarea class="form-control" id="cc" name="cc" rows="2" placeholder="e.g., Fever, cough..."></textarea>
+                            <textarea class="form-control" id="cc" name="cc" rows="2"
+                                placeholder="e.g., Fever, cough..."></textarea>
                         </div>
 
                         <div class="mb-3">
@@ -221,8 +220,7 @@
                     <i class="fa fa-cart"></i>
                     Save
                 </button>
-                <img class="pe-none" src="{{ asset('assets/img/prescription/border_bottom.png') }}"
-                    alt="bottom graphics">
+                <img class="pe-none" src="{{ asset('assets/img/prescription/border_bottom.png') }}" alt="bottom graphics">
             </div>
         </div>
     </div>
@@ -260,16 +258,16 @@
             items.forEach((item, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                             <td>${item.medicine_name}</td>
-                            <td>${item.dose_name}</td>
-                            <td>${item.days_name}</td>
-                            <td>${item.suggestion}</td>
-                            <td class="text-center">
-                            <button onclick="removeItem(${index})" class="btn btn-sm btn-danger">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                            </td> 
-                        `;
+                                 <td>${item.medicine_name}</td>
+                                <td>${item.dose_name}</td>
+                                <td>${item.days_name}</td>
+                                <td>${item.suggestion}</td>
+                                <td class="text-center">
+                                <button onclick="removeItem(${index})" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                </td> 
+                            `;
                 tbody.appendChild(tr);
             })
         }
@@ -297,13 +295,13 @@
             diagnosisItems.forEach((item, index) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        ${item}
-                        <span style="cursor:pointer;height:20px;width:20px" onclick="removeDiagnosisItem(${index})" class="d-flex justify-content-center align-items-center rounded-pill bg-danger bg-opacity-25">
-                            <span style="margin-top:-5px">x</span>
-                            </span>
-                    </li>
-                `;
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            ${item}
+                            <span style="cursor:pointer;height:20px;width:20px" onclick="removeDiagnosisItem(${index})" class="d-flex justify-content-center align-items-center rounded-pill bg-danger bg-opacity-25">
+                                <span style="margin-top:-5px">x</span>
+                                </span>
+                        </li>
+                    `;
                 diagnosisContainer.appendChild(li);
             });
         }
@@ -315,7 +313,7 @@
         }
 
         //crate prescription
-        document.getElementById('save-btn').addEventListener('click', () => {
+        document.getElementById('save-btn').addEventListener('click', async () => {
             const patient_id = document.getElementById('patient-id').value;
             const consultant_id = document.getElementById('doctor-id').value;
             const cc = document.getElementById('cc').value;
@@ -332,6 +330,27 @@
                 rx: items,
             }
             console.log(payLoad);
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/prescriptions', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payLoad),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('Prescription Created', result);
+                alert('Prescription created successfully');
+            } catch (error) {
+                console.log('Server error',error);
+                alert('Error Creating Prescription')
+            }
         });
     </script>
 @endsection
