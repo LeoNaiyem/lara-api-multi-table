@@ -103,7 +103,8 @@
                                 <p class="mb-1 fw-bold">Patient:</p>
                                 <h4 class="mb-1">{{$patient->name}}</h4>
                                 <p class="text-danger fw-bold text-uppercase mb-1">
-                                    {{$patient->profession ? $patient->profession : "N/A"}}</p>
+                                    {{$patient->profession ? $patient->profession : "N/A"}}
+                                </p>
                             </div>
                             <div class="my-2 d-flex align-items-center gap-4">
                                 <p class="m-0">AGE:</p><strong>{{$patient->age}}</strong>
@@ -125,7 +126,7 @@
 
                 {{-- mani --}}
                 <div class="row ps-main column-gap-5 my-5 px-5">
-                    <div class="col-8 border-end border-info-subtle pe-4">
+                    <div class="col-7 border-end border-info-subtle pe-4">
                         {{-- head --}}
                         <div class=" d-flex justify-content-between align-items-center">
                             <img class="pe-none" src="{{ asset('assets/img/prescription/rx_icon.png') }}" alt="rx icon"
@@ -148,8 +149,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-3">
-                        <p class="fw-bold mb-2">DIAGNOSIS:</p>                       
+                    <div class="col-4">
+                        <p class="fw-bold mb-2">DIAGNOSIS:</p>
                         <ol id='diagnosis-container' class="list-group list-group-numbered mt-1">
 
                         </ol>
@@ -188,19 +189,20 @@
                         <p>Street address here, City State, Zip Code</p>
                     </div>
                 </div>
+                <button id="save-btn" onclick="window.print()" class=" btn btn-print no-print btn-lg btn-info
+                    position-absolute top-25 start-50">
+                    Print
+                </button>
                 <img class="pe-none" src="{{ asset('assets/img/prescription/border_bottom.png') }}" alt="bottom graphics">
             </div>
         </div>
     </div>
-    <div class="print-button">
-        <button class="btn-print" onclick="window.print()">Print Prescription</button>
-    </div> 
     <input type="hidden" id="prescription-id" value="{{ $prescription->id }}">
     <script type="module">
 
         const baseURL = "http://127.0.0.1:8000/api";
         const prescriptionId = document.getElementById('prescription-id').value;
-        let data=null;
+        let data = null;
 
 
         // fetch data based on prescription id
@@ -217,7 +219,7 @@
                     throw new Error(`Server Error: ${response.status}`);
                 }
                 const result = await response.json();
-                data=result.prescription;
+                data = result.prescription;
                 showMedicines(result.prescription);
                 showDiagnosis();
             } catch (err) {
@@ -228,18 +230,18 @@
         console.log(data);
 
         //show investigations
-        function showDiagnosis(investigations){
-            const diagnosisStr=data[0].investigation;
-            const diagnosisArr=diagnosisStr.split(',');
+        function showDiagnosis(investigations) {
+            const diagnosisStr = data[0].investigation;
+            const diagnosisArr = diagnosisStr.split(',');
             const diagnosisContainer = document.getElementById('diagnosis-container');
             diagnosisContainer.innerHTML = '';
             diagnosisArr.forEach((item, index) => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            ${index+1}.&nbsp; ${item}                            
-                        </li>
-                    `;
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                ${index + 1}.&nbsp; ${item}                            
+                            </li>
+                        `;
                 diagnosisContainer.appendChild(li);
             });
         }
@@ -252,11 +254,11 @@
             items.forEach((item, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                        <td>${item.medicine_name}</td>
-                        <td>${item.dose}</td>
-                        <td>${item.days} Days</td>
-                        <td>${item.suggestion}</td>
-                    `;
+                            <td>${item.medicine_name}</td>
+                            <td>${item.dose}</td>
+                            <td>${item.days} Days</td>
+                            <td>${item.suggestion}</td>
+                        `;
                 tbody.appendChild(tr);
             })
         }
